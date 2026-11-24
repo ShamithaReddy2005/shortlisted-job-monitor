@@ -1,0 +1,42 @@
+# .github/workflows/daily.yml: tells GitHub when and how to run Shortlisted
+
+name: Shortlisted daily run
+
+on:
+  schedule:
+    - cron: "30 2 * * *"   # 02:30 UTC = 8:00 AM IST, every day
+  workflow_dispatch:         # adds a "Run workflow" button for manual testing
+
+permissions:
+  contents: write            # lets the bot save seen-jobs.json back to the repo
+
+jobs:
+  run:
+    runs-on: ubuntu-latest   # a free Linux computer from GitHub
+    steps:
+      # 1. Download your code
+      - uses: actions/checkout@v4
+
+      # 2. Install Node.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # 3. Install packages exactly as listed in package-lock.json
+      - run: npm ci
+
+      # 4. Run the bot. Secrets come from GitHub settings instead of .env
+      - run: node index.js
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+
+      # 5. Save the bot's memory so tomorrow's run knows what was already sent
+      - name: Save seen-jobs.json
+        run: |
+          git config user.name "shortlisted-bot"
+          git config user.email "shortlisted-bot@users.noreply.github.com"
+          git add seen-jobs.json
+          git diff --staged --quiet || git commit -m "🤖 Update seen jobs"
+          git push

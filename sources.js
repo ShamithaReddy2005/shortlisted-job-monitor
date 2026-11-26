@@ -13,7 +13,7 @@ async function fetchWatchedPage(page) {
   });
 
   if (!response.ok) {
-    console.warn(`⚠️  Page "${page.name}" failed (${response.status})`);
+    console.warn(`Page "${page.name}" failed (${response.status})`);
     return [];
   }
 
@@ -42,7 +42,7 @@ async function fetchWatchedPage(page) {
   fs.writeFileSync(COUNTS_FILE, JSON.stringify(counts, null, 2));
 
   if (count === 0) {
-    console.warn(`⚠️  "${page.name}": 0 mentions. The page probably loads jobs with JavaScript.`);
+    console.warn(` "${page.name}": 0 mentions. The page probably loads jobs with JavaScript.`);
   }
 
   // First visit just records the count; after that, only alert when it goes UP
@@ -65,7 +65,7 @@ async function fetchGreenhouse(company) {
 
   // A wrong company ID gives a 404, so we warn and move on instead of crashing
   if (!response.ok) {
-    console.warn(`⚠️  Greenhouse "${company}" not found (${response.status})`);
+    console.warn(` Greenhouse "${company}" not found (${response.status})`);
     return [];
   }
 
@@ -85,7 +85,7 @@ async function fetchLever(company) {
   const response = await fetch(url);
 
   if (!response.ok) {
-    console.warn(`⚠️  Lever "${company}" not found (${response.status})`);
+    console.warn(` Lever "${company}" not found (${response.status})`);
     return [];
   }
 
@@ -105,7 +105,7 @@ async function fetchAshby(company) {
   const response = await fetch(url);
 
   if (!response.ok) {
-    console.warn(`⚠️  Ashby "${company}" not found (${response.status})`);
+    console.warn(` Ashby "${company}" not found (${response.status})`);
     return [];
   }
 
@@ -157,7 +157,7 @@ async function fetchWorkday(company) {
   });
 
   if (!response.ok) {
-    console.warn(`⚠️  Workday "${company.name}" failed (${response.status})`);
+    console.warn(` Workday "${company.name}" failed (${response.status})`);
     return [];
   }
 

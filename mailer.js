@@ -45,11 +45,12 @@ async function sendJobsEmail(jobs) {
   const india      = jobs.filter((j) => !j.alwaysShow && !j.international);
   const abroad     = jobs.filter((j) => !j.alwaysShow && j.international);
 
-  const count = `${jobs.length} new update${jobs.length > 1 ? "s" : ""}`;
+  const count = `${jobs.length} new opening${jobs.length > 1 ? "s" : ""}`;
   const html = `
-    <h2>✅ Shortlisted: ${count} for you today</h2>
+    <h2> The bot found ${count} which were not there yesterday </h2>
+    <p> Hope you get your "Congratulations, we would like to move forward" mail from one of these companies</p>
     ${section("🔔 Career pages that changed", pageAlerts)}
-    ${section("🇮🇳 Roles in India", india)}
+    ${section("Roles in India", india)}
     ${section("🌍 Abroad", abroad, "Check the posting for visa sponsorship before applying.")}
     <p style="color:#888; font-size:12px;">Sent by your Shortlisted bot 🎓</p>
   `;
@@ -57,7 +58,7 @@ async function sendJobsEmail(jobs) {
   await transporter.sendMail({
     from: `"Shortlisted Bot" <${process.env.GMAIL_USER}>`,
     to: process.env.EMAIL_TO,
-    subject: `✅ Shortlisted: ${count} for you today`,
+    subject: `Found ${count} for you today`,
     html: html,
   });
 

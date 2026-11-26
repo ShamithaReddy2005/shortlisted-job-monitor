@@ -33,10 +33,21 @@ jobs:
           EMAIL_TO: ${{ secrets.EMAIL_TO }}
 
       # 5. Save the bot's memory so tomorrow's run knows what was already sent
-      - name: Save seen-jobs.json
+      # 5. Save the bot's memory so tomorrow's run knows what was already sent
+      - name: Save memory files
         run: |
           git config user.name "shortlisted-bot"
           git config user.email "shortlisted-bot@users.noreply.github.com"
-          git add seen-jobs.json page-counts.json
-          git diff --staged --quiet || git commit -m "🤖 Update seen jobs"
+
+          # Add each memory file only if it exists (fixes error A)
+          for f in seen-jobs.json page-counts.json; do
+            if [ -f "$f" ]; then git add "$f"; fi
+          done
+
+          # Commit only if something changed
+          git diff --staged --quiet && exit 0
+          git commit -m "🤖 Update seen jobs"
+
+          # Get any changes made on GitHub meanwhile, then push (fixes error B)
+          git pull --rebase
           git push

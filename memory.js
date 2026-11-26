@@ -3,7 +3,7 @@
 const fs = require("fs");  // built into Node: lets us read and write files
 
 const FILE = "seen-jobs.json";
-const KEEP_DAYS = 60;      // forget jobs older than this
+const KEEP_DAYS = 10;      // forget jobs older than this
 
 // Build a key that's the same no matter where the job came from.
 // "  Software Engineer, Intern " @ "Stripe" → "stripe|software engineer, intern"

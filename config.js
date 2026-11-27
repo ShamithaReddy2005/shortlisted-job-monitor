@@ -6,10 +6,12 @@ module.exports = {
   // The ID from the company's job URL
   
   //greenhouse
-  greenhouseCompanies: ["hackerrank", "devrev", "enterpret", "karya", "stripe", "mdbgeneralreferrals"],
+  greenhouseCompanies: ["hackerrank", "devrev", "enterpret", "karya", "stripe", "mdbgeneralreferrals", "instawork", "groww", "razorpaysoftwareprivatelimited",
+    "nasdaq", "zscalar", "schrdinger"
+  ],
   
   // lever
-  leverCompanies: ["epifi", "fampay", "stable-money1", "Sprinto"],
+  leverCompanies: ["epifi", "fampay", "stable-money1", "Sprinto", "paytm", "acronaviation"],
   
   //ashby
   ashbyCompanies: [],
@@ -28,7 +30,7 @@ module.exports = {
     // { name: "Company X", url: "https://companyx.com/careers", keywords: ["intern", "internship"] },
   ],
 
-  // ---- Adzuna (used only once your keys are in .env) ----
+  // ---- Adzuna (used only if your keys are in .env) ----
   searches: ["data engineer intern", "machine learning intern", "software engineer intern"],
   location: "India",
   maxDaysOld: 3,
